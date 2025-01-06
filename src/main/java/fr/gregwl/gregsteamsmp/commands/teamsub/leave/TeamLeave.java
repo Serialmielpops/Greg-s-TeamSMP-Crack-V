@@ -52,11 +52,11 @@ public class TeamLeave extends SubCommand {
         final String playersJsonExport = FileUtils.loadContent(filePlayerList);
         final PlayerList playerList = playerSerializationManager.deserialize(playersJsonExport);
 
-        if(playerList.getPlayerList().containsKey(player.getUniqueId())) {
-            if(teamOwners.getTeamsOwners().containsKey(player.getUniqueId())) {
+        if(playerList.getPlayerList().containsKey(player.getName())) {
+            if(teamOwners.getTeamsOwners().containsKey(player.getName())) {
                 player.sendMessage(GregsTeamSMP.msgPrefix + "You are the owner of the team. /team disband");
             } else {
-                final String teamName = playerList.getPlayerList().get(player.getUniqueId());
+                final String teamName = playerList.getPlayerList().get(player.getName());
 
                 // MODIFICATION SUR LE JSON TEAM
 
@@ -65,17 +65,17 @@ public class TeamLeave extends SubCommand {
                 final String teamJsonExport = FileUtils.loadContent(file);
                 final Team team = teamSerializationManager.deserialize(teamJsonExport);
 
-                team.getMembers().remove(player.getUniqueId());
+                team.getMembers().remove(player.getName());
                 team.setNbmembers(team.getNbmembers() - 1);
 
-                ArrayList<UUID> members = team.getMembers();
+                ArrayList<String> members = team.getMembers();
 
                 final String json = teamSerializationManager.serialize(team);
                 FileUtils.save(file, json);
 
                 // MODIFITCATION SUR LE JSON DE PLAYERS
 
-                playerList.getPlayerList().remove(player.getUniqueId());
+                playerList.getPlayerList().remove(player.getName());
 
                 final String playersJson = playerSerializationManager.serialize(playerList);
                 FileUtils.save(filePlayerList, playersJson);

@@ -39,7 +39,8 @@ public class TeamInfo extends fr.gregwl.gregsteamsmp.commands.SubCommand {
     @Override
     public void perform(Player player, String[] args) {
 
-        final UUID playerUUID = player.getUniqueId();
+        final String playerUUID = player.getName();
+        final String playerCible =  args[1];
 
         final File filePlayerList = new File(saveDir, "playerlist.json");
 
@@ -47,34 +48,39 @@ public class TeamInfo extends fr.gregwl.gregsteamsmp.commands.SubCommand {
         final String playerJsonExport = FileUtils.loadContent(filePlayerList);
         final PlayerList playerList = playerSerializationManager.deserialize(playerJsonExport);
 
-        if(playerList.getPlayerList().containsKey(playerUUID)) {
-            String teamName = playerList.getPlayerList().get(playerUUID);
-            final File fileTeam = new File(saveDir, teamName + ".json");
+        if(args.length == 2){
+            if(playerList.getPlayerList().containsKey(playerCible)) {
+                String teamName = playerList.getPlayerList().get(playerCible);
+                final File fileTeam = new File(saveDir, teamName + ".json");
 
-            final TeamSerializationManager teamSerializationManager = GregsTeamSMP.getInstance().getTeamSerializationManager();
-            final String TeamJsonExport = FileUtils.loadContent(fileTeam);
-            final Team team = teamSerializationManager.deserialize(TeamJsonExport);
+                final TeamSerializationManager teamSerializationManager = GregsTeamSMP.getInstance().getTeamSerializationManager();
+                final String TeamJsonExport = FileUtils.loadContent(fileTeam);
+                final Team team = teamSerializationManager.deserialize(TeamJsonExport);
 
-            String teamOwnerName = Bukkit.getOfflinePlayer(team.getOwner()).getName();
-            int nbMembres = team.getNbmembers();
-            ArrayList<UUID> members = team.getMembers();
-            ArrayList<String> membersNames = new ArrayList<>();
-            for(int i = 0; i < members.size(); i++) {
-                membersNames.add(Bukkit.getOfflinePlayer(members.get(i)).getName());
+                String teamOwnerName = Bukkit.getOfflinePlayer(team.getOwner()).getName();
+                int nbMembres = team.getNbmembers();
+                ArrayList<String> members = team.getMembers();
+                ArrayList<String> membersNames = new ArrayList<>();
+                for(int i = 0; i < members.size(); i++) {
+                    membersNames.add(Bukkit.getOfflinePlayer(members.get(i)).getName());
+                }
+
+                player.sendMessage("§7§l---------");
+                player.sendMessage(GregsTeamSMP.msgPrefix + "Team Information:");
+                player.sendMessage("§1§lName§7:§f " + teamName);
+                player.sendMessage("§1§lOwner§7:§f " + teamOwnerName);
+                player.sendMessage("§1§lMembers§7:§f " + nbMembres);
+                player.sendMessage("§1§lList of members§7:§f " + membersNames);
+                player.sendMessage("§7§l---------");
+
+            } else {
+                player.sendMessage(GregsTeamSMP.msgPrefix + "Sorry. "+ playerCible +" are not in a team !");
             }
-
-            player.sendMessage("§7§l---------");
-            player.sendMessage(GregsTeamSMP.msgPrefix + "Team Information:");
-            player.sendMessage("§1§lName§7:§f " + teamName);
-            player.sendMessage("§1§lOwner§7:§f " + teamOwnerName);
-            player.sendMessage("§1§lMembers§7:§f " + nbMembres);
-            player.sendMessage("§1§lList of members§7:§f " + membersNames);
-            player.sendMessage("§7§l---------");
-
-        } else {
-            player.sendMessage(GregsTeamSMP.msgPrefix + "Sorry. You are not in a team !");
+        }else{
+            player.sendMessage("§4please use /team info (player name)");
         }
     }
+
 
     @Override
     public List<String> getSubCommandArguments(Player player, String[] args) {

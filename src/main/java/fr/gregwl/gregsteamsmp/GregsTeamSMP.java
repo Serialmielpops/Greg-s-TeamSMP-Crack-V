@@ -23,7 +23,7 @@ public final class GregsTeamSMP extends JavaPlugin{
     private PlayerSerializationManager playerSerializationManager;
     private ClaimSerializationManager claimSerializationManager;
     public static String msgPrefix = ("§f[§1§lGreg's§b TeamSMP§f] ");
-    public static HashMap<UUID, String> invitedTeamPlayers = new HashMap<>();
+    public static HashMap<String, String> invitedTeamPlayers = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -44,7 +44,7 @@ public final class GregsTeamSMP extends JavaPlugin{
 
         final File filePlayerList = new File(saveDir, "playerlist.json");
         if(!filePlayerList.exists()) {
-            HashMap<UUID, String> hashmap = new HashMap<>();
+            HashMap<String, String> hashmap = new HashMap<>();
             PlayerList playerList = new PlayerList(hashmap);
 
             final PlayerSerializationManager playerSerializationManager = GregsTeamSMP.getInstance().getPlayerSerializationManager();

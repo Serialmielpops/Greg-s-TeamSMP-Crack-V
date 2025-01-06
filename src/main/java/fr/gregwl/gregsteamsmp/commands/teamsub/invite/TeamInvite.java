@@ -38,8 +38,8 @@ public class TeamInvite extends fr.gregwl.gregsteamsmp.commands.SubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if(args.length == 2) {
-            final UUID playerUUID = player.getUniqueId();
-            final UUID targetplayerUUID = Bukkit.getPlayer(args[1]).getUniqueId();
+            final String playerUUID = player.getName();
+            final String targetplayerUUID = args[1];
 
             final File file1 = new File(saveDir, "teamsowners.json");
             final File filePlayerList = new File(saveDir, "playerlist.json");
@@ -61,11 +61,11 @@ public class TeamInvite extends fr.gregwl.gregsteamsmp.commands.SubCommand {
                         if(GregsTeamSMP.invitedTeamPlayers.containsKey(targetplayerUUID)) {
                             GregsTeamSMP.invitedTeamPlayers.remove(targetplayerUUID);
                             GregsTeamSMP.invitedTeamPlayers.put(targetplayerUUID, teamName);
-                            player.sendMessage(GregsTeamSMP.msgPrefix + "§1§l" + Bukkit.getPlayer(targetplayerUUID).getName() + "§f has been invited in your team.");
+                            player.sendMessage(GregsTeamSMP.msgPrefix + "§1§l" + targetplayerUUID + "§f has been invited in your team.");
                             Bukkit.getPlayer(targetplayerUUID).sendMessage("You have been invited to the§1§l " + teamName + "§f team. Type§1§l /team join§f for join this team.");
                         } else {
                             GregsTeamSMP.invitedTeamPlayers.put(targetplayerUUID, teamName);
-                            player.sendMessage(GregsTeamSMP.msgPrefix + "§1§l" + Bukkit.getPlayer(targetplayerUUID).getName() + "§f has been invited in your team.");
+                            player.sendMessage(GregsTeamSMP.msgPrefix + "§1§l" + targetplayerUUID + "§f has been invited in your team.");
                             Bukkit.getPlayer(targetplayerUUID).sendMessage(GregsTeamSMP.msgPrefix + "You have been invited to the§1§l " + teamName + "§f team. Type§1§l /team join§f for join this team.");
                         }
 

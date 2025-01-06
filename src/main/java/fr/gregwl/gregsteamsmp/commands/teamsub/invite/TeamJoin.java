@@ -37,19 +37,19 @@ public class TeamJoin extends fr.gregwl.gregsteamsmp.commands.SubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
-        if(GregsTeamSMP.invitedTeamPlayers.containsKey(player.getUniqueId())) {
-            String teamName = GregsTeamSMP.invitedTeamPlayers.get(player.getUniqueId());
+        if(GregsTeamSMP.invitedTeamPlayers.containsKey(player.getName())) {
+            String teamName = GregsTeamSMP.invitedTeamPlayers.get(player.getName());
 
             final File filePlayerList = new File(saveDir, "playerlist.json");
             final File fileTeam = new File(saveDir, teamName + ".json");
 
-            GregsTeamSMP.invitedTeamPlayers.remove(player.getUniqueId());
+            GregsTeamSMP.invitedTeamPlayers.remove(player.getName());
 
             final PlayerSerializationManager playerSerializationManager = GregsTeamSMP.getInstance().getPlayerSerializationManager();
             final String playersJsonExport = FileUtils.loadContent(filePlayerList);
             final PlayerList playerList = playerSerializationManager.deserialize(playersJsonExport);
 
-            playerList.getPlayerList().put(player.getUniqueId(), teamName);
+            playerList.getPlayerList().put(player.getName(), teamName);
 
 
             // save file players list with ther own teams
@@ -60,9 +60,9 @@ public class TeamJoin extends fr.gregwl.gregsteamsmp.commands.SubCommand {
             final String TeamJsonExport = FileUtils.loadContent(fileTeam);
             final Team team = teamSerializationManager.deserialize(TeamJsonExport);
 
-            team.getMembers().add(player.getUniqueId());
+            team.getMembers().add(player.getName());
             team.setNbmembers(team.getNbmembers() + 1);
-            ArrayList<UUID> members = team.getMembers();
+            ArrayList<String> members = team.getMembers();
 
             // save file team
             final String json = teamSerializationManager.serialize(team);

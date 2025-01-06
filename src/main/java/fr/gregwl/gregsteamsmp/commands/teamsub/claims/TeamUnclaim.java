@@ -48,9 +48,9 @@ public class TeamUnclaim extends fr.gregwl.gregsteamsmp.commands.SubCommand {
         Chunk chunk = player.getLocation().getChunk();
         String chunkID = chunk.getX() + "," + chunk.getZ();
 
-        String playerTeam = playerList.getPlayerList().get(player.getUniqueId());
+        String playerTeam = playerList.getPlayerList().get(player.getName());
 
-        if(playerList.getPlayerList().containsKey(player.getUniqueId())) {
+        if(playerList.getPlayerList().containsKey(player.getName())) {
             if(claims.getChunks().containsKey(chunkID)) {
                 String claimTeamOwner = claims.getChunks().get(chunkID);
                 if(playerTeam.equals(claimTeamOwner)) {

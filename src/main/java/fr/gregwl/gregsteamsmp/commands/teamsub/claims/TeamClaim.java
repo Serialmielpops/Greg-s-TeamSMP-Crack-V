@@ -49,12 +49,12 @@ public class TeamClaim extends fr.gregwl.gregsteamsmp.commands.SubCommand {
 
         String chunkID = chunk.getX() + "," + chunk.getZ();
 
-        if(playerList.getPlayerList().containsKey(player.getUniqueId())) {
+        if(playerList.getPlayerList().containsKey(player.getName())) {
             if(claims.getChunks().containsKey(chunkID)) {
                 String teamName = claims.getChunks().get(chunkID);
                 player.sendMessage(GregsTeamSMP.msgPrefix + "Sorry, this chunk is already claimed by§1§l" + teamName);
             } else {
-                String currentTeamName = playerList.getPlayerList().get(player.getUniqueId());
+                String currentTeamName = playerList.getPlayerList().get(player.getName());
                 claims.getChunks().put(chunkID, currentTeamName);
                 player.sendMessage(GregsTeamSMP.msgPrefix + "You claimed the chunk§1§l " + chunkID);
 

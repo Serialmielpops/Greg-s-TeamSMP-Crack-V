@@ -5,13 +5,13 @@ import java.util.UUID;
 
 public class PlayerList {
 
-    HashMap<UUID, String> playerList = new HashMap<>();
+    HashMap<String, String> playerList = new HashMap<>();
 
-    public PlayerList(HashMap<UUID, String> playerList) {
+    public PlayerList(HashMap<String, String> playerList) {
         this.playerList = playerList;
     }
 
-    public HashMap<UUID, String> getPlayerList() {
+    public HashMap<String, String> getPlayerList() {
         return playerList;
     }
 }

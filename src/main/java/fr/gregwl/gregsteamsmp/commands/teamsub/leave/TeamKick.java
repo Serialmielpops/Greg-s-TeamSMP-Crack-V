@@ -55,20 +55,20 @@ public class TeamKick extends SubCommand {
 
 
 
-            if (teamOwners.getTeamsOwners().containsKey(player.getUniqueId())) {
+            if (teamOwners.getTeamsOwners().containsKey(player.getName())) {
 
-                final UUID targetplayerUUID = Bukkit.getPlayer(args[1]).getUniqueId();
+                final String targetplayerUUID = args[1];
 
-                String teamName = teamOwners.getTeamsOwners().get(player.getUniqueId());
+                String teamName = teamOwners.getTeamsOwners().get(player.getName());
                 final File fileTeam = new File(saveDir, teamName + ".json");
                 final TeamSerializationManager teamSerializationManager = GregsTeamSMP.getInstance().getTeamSerializationManager();
                 final String TeamJsonExport = FileUtils.loadContent(fileTeam);
                 final Team team = teamSerializationManager.deserialize(TeamJsonExport);
                 if(team.getMembers().contains(targetplayerUUID)) {
-                    if(targetplayerUUID == player.getUniqueId()) {
+                    if(targetplayerUUID == player.getName()) {
                         player.sendMessage(GregsTeamSMP.msgPrefix + "Sorry, you can't kick yourself !");
                     } else {
-                        team.getMembers().remove(targetplayerUUID);
+                        team.getMembers().remove(getName());
                         team.setNbmembers(team.getNbmembers() - 1);
 
                         final String json = teamSerializationManager.serialize(team);
@@ -82,7 +82,7 @@ public class TeamKick extends SubCommand {
                         final String jsonplayer  = playerSerializationManager.serialize(playerList);
                         FileUtils.save(filePlayerList, jsonplayer);
 
-                        ArrayList<UUID> members = team.getMembers();
+                        ArrayList<String> members = team.getMembers();
 
                         for(int i = 0; i < members.size(); i++) {
                             Player currentPlayer = Bukkit.getPlayer(members.get(i));

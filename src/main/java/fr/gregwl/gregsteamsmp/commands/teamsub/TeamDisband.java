@@ -51,7 +51,7 @@ public class TeamDisband extends fr.gregwl.gregsteamsmp.commands.SubCommand {
             final String playersJsonExport = FileUtils.loadContent(filePlayerList);
             final PlayerList playerList = playerSerializationManager.deserialize(playersJsonExport);
 
-            String teamName = teamOwners.getTeamsOwners().get(player.getUniqueId());
+            String teamName = teamOwners.getTeamsOwners().get(player.getName());
 
             final File fileTeam = new File(saveDir, teamName + ".json");
 
@@ -60,26 +60,26 @@ public class TeamDisband extends fr.gregwl.gregsteamsmp.commands.SubCommand {
             final String TeamJsonExport = FileUtils.loadContent(fileTeam);
             final Team team = teamSerializationManager.deserialize(TeamJsonExport);
 
-            if(teamOwners.getTeamsOwners().containsKey(player.getUniqueId())) {
+            if(teamOwners.getTeamsOwners().containsKey(player.getName())) {
 
 
-                teamOwners.getTeamsOwners().remove(player.getUniqueId());
+                teamOwners.getTeamsOwners().remove(player.getName());
                 final String json1 = teamOwnersSerializationManager.serialize(teamOwners);
                 FileUtils.save(file1, json1);
 
-                playerList.getPlayerList().remove(player.getUniqueId());
+                playerList.getPlayerList().remove(player.getName());
 
 
                 player.sendMessage(GregsTeamSMP.msgPrefix + "The team§1§l " + teamName + "§f has been disbanded !");
                 Bukkit.broadcastMessage(GregsTeamSMP.msgPrefix + "§1§l" + player.getName() + "§f disbanded the§1§l " + teamName + "§f team !");
 
-                ArrayList<UUID> members = team.getMembers();
+                ArrayList<String> members = team.getMembers();
 
 
 
                 for(int i = 0; i < members.size(); i++) {
                     Player currentPlayer = Bukkit.getPlayer(members.get(i));
-                    playerList.getPlayerList().remove(currentPlayer.getUniqueId());
+                    playerList.getPlayerList().remove(currentPlayer.getName());
                 }
 
                 final String playerJson = playerSerializationManager.serialize(playerList);

@@ -48,7 +48,7 @@ public class TeamCreate extends SubCommand {
     public void perform(Player player, String[] args) {
         if(args.length == 2) {
             final String teamName = (args[1]);
-            final UUID teamOwner = player.getUniqueId();
+            final String teamOwner = player.getName();
             final File file = new File(saveDir, teamName + ".json");
             final File file1 = new File(saveDir, "teamsowners.json");
             final File filePlayerList = new File(saveDir, "playerlist.json");
@@ -65,7 +65,7 @@ public class TeamCreate extends SubCommand {
                 if(file.exists()) {
                     player.sendMessage(GregsTeamSMP.msgPrefix + "Sorry, this team already exists !");
                 } else {
-                    ArrayList<UUID> members = new ArrayList<>();
+                    ArrayList<String> members = new ArrayList<>();
                     members.add(teamOwner);
                     Team currentTeam = new Team(teamName, 1, teamOwner, members);
                     final TeamSerializationManager teamSerializationManager = GregsTeamSMP.getInstance().getTeamSerializationManager();
@@ -94,7 +94,7 @@ public class TeamCreate extends SubCommand {
 
                         FileUtils.save(filePlayerList, jsonplayer);
                     } else {
-                        HashMap<UUID, String> hashMap = new HashMap<>();
+                        HashMap<String, String> hashMap = new HashMap<>();
                         hashMap.put(teamOwner, teamName);
                         TeamOwners teamOwners = new TeamOwners(hashMap);
 

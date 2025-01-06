@@ -5,13 +5,13 @@ import java.util.UUID;
 
 public class TeamOwners {
 
-    HashMap<UUID, String> TeamsOwners = new HashMap<>();
+    HashMap<String, String> TeamsOwners = new HashMap<>();
 
-    public TeamOwners(HashMap<UUID, String> teamsOwners) {
+    public TeamOwners(HashMap<String, String> teamsOwners) {
         TeamsOwners = teamsOwners;
     }
 
-    public HashMap<UUID, String> getTeamsOwners() {
+    public HashMap<String, String> getTeamsOwners() {
         return TeamsOwners;
     }
 
